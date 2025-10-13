@@ -25,19 +25,16 @@ async function queryOpenFda(): Promise<void> {
   try {
     // 创建 SSE 传输层
     const transport = new SSEClientTransport(new URL(serverUrl), {
-      headers,
+      requestInit: {
+        headers,
+      },
     });
 
     // 创建 MCP 客户端
-    const client = new Client(
-      {
-        name: "openfda-demo",
-        version: "0.1.0",
-      },
-      {
-        capabilities: {},
-      }
-    );
+    const client = new Client({
+      name: "openfda-demo",
+      version: "0.1.0",
+    });
 
     // 连接到服务器
     await client.connect(transport);
@@ -58,9 +55,8 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      if (result.content && result.content.length > 0) {
-        const content = result.content[0];
-        if (content.type === "text") {
+      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      if (content && content.type === "text" && content.text) {
           const data = JSON.parse(content.text);
           if (data.results && data.results.length > 0) {
             const drug = data.results[0];
@@ -100,8 +96,9 @@ async function queryOpenFda(): Promise<void> {
           } else {
             console.log("   ❌ 未找到相关信息\n");
           }
+        } else {
+          console.log("   ❌ 未找到相关信息\n");
         }
-      }
     } catch (error) {
       console.log(`   ❌ 查询失败: ${error}\n`);
     }
@@ -121,9 +118,8 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      if (result.content && result.content.length > 0) {
-        const content = result.content[0];
-        if (content.type === "text") {
+      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      if (content && content.type === "text" && content.text) {
           const data = JSON.parse(content.text);
           if (data.results && data.results.length > 0) {
             const drug = data.results[0];
@@ -139,8 +135,9 @@ async function queryOpenFda(): Promise<void> {
           } else {
             console.log("   ❌ 未找到相关信息\n");
           }
+        } else {
+          console.log("   ❌ 未找到相关信息\n");
         }
-      }
     } catch (error) {
       console.log(`   ❌ 查询失败: ${error}\n`);
     }
@@ -160,9 +157,8 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      if (result.content && result.content.length > 0) {
-        const content = result.content[0];
-        if (content.type === "text") {
+      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      if (content && content.type === "text" && content.text) {
           const data = JSON.parse(content.text);
           if (data.results && data.results.length > 0) {
             const drug = data.results[0];
@@ -178,8 +174,9 @@ async function queryOpenFda(): Promise<void> {
           } else {
             console.log("   ❌ 未找到相关信息\n");
           }
+        } else {
+          console.log("   ❌ 未找到相关信息\n");
         }
-      }
     } catch (error) {
       console.log(`   ❌ 查询失败: ${error}\n`);
     }
@@ -200,21 +197,19 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      if (result.content && result.content.length > 0) {
-        const content = result.content[0];
-        if (content.type === "text") {
-          const response = content.text;
-          // 截取前 400 字符
-          if (response.length > 400) {
-            console.log(`✅ 分析结果:`);
-            console.log(`   ${response.slice(0, 400)}...`);
-            console.log(`   (完整结果有 ${response.length} 字符)`);
-          } else {
-            console.log(`✅ 分析结果:`);
-            console.log(`   ${response}`);
-          }
-          console.log();
+      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      if (content && content.type === "text" && content.text) {
+        const response = content.text;
+        // 截取前 400 字符
+        if (response.length > 400) {
+          console.log(`✅ 分析结果:`);
+          console.log(`   ${response.slice(0, 400)}...`);
+          console.log(`   (完整结果有 ${response.length} 字符)`);
+        } else {
+          console.log(`✅ 分析结果:`);
+          console.log(`   ${response}`);
         }
+        console.log();
       }
     } catch (error) {
       console.log(`   ❌ 分析失败: ${error}\n`);
@@ -238,31 +233,29 @@ async function queryOpenFda(): Promise<void> {
           },
         });
 
-        if (result.content && result.content.length > 0) {
-          const content = result.content[0];
-          if (content.type === "text") {
-            const data = JSON.parse(content.text);
-            if (data.results && data.results.length > 0) {
-              const drug = data.results[0];
+        const content = (result.content as Array<{type: string; text?: string}>)[0];
+        if (content && content.type === "text" && content.text) {
+          const data = JSON.parse(content.text);
+          if (data.results && data.results.length > 0) {
+            const drug = data.results[0];
 
-              // 品牌名
-              let brandNames = "未知";
-              if (drug.openfda?.brand_name) {
-                brandNames = drug.openfda.brand_name.slice(0, 2).join(", ");
-              }
-
-              console.log(
-                `   • ${
-                  drugName.charAt(0).toUpperCase() + drugName.slice(1)
-                }: ${brandNames}`
-              );
-            } else {
-              console.log(
-                `   • ${
-                  drugName.charAt(0).toUpperCase() + drugName.slice(1)
-                }: (未找到)`
-              );
+            // 品牌名
+            let brandNames = "未知";
+            if (drug.openfda?.brand_name) {
+              brandNames = drug.openfda.brand_name.slice(0, 2).join(", ");
             }
+
+            console.log(
+              `   • ${
+                drugName.charAt(0).toUpperCase() + drugName.slice(1)
+              }: ${brandNames}`
+            );
+          } else {
+            console.log(
+              `   • ${
+                drugName.charAt(0).toUpperCase() + drugName.slice(1)
+              }: (未找到)`
+            );
           }
         }
       } catch (error) {

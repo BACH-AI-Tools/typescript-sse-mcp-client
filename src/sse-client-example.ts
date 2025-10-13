@@ -26,19 +26,16 @@ async function connectOpenFdaMcp(): Promise<void> {
   try {
     // 创建 SSE 传输层
     const transport = new SSEClientTransport(new URL(serverUrl), {
-      headers,
+      requestInit: {
+        headers,
+      },
     });
 
     // 创建 MCP 客户端
-    const client = new Client(
-      {
-        name: "sse-client-example",
-        version: "0.1.0",
-      },
-      {
-        capabilities: {},
-      }
-    );
+    const client = new Client({
+      name: "sse-client-example",
+      version: "0.1.0",
+    });
 
     // 连接到服务器
     await client.connect(transport);
@@ -161,19 +158,17 @@ async function connectOpenFdaMcp(): Promise<void> {
 
         console.log("   ✅ 调用成功！");
         console.log("   结果:");
-        if (result.content && result.content.length > 0) {
-          for (const content of result.content) {
-            if (content.type === "text") {
-              const text = content.text;
-              // 截取前 500 字符，避免输出太长
-              if (text.length > 500) {
-                console.log(`   ${text.slice(0, 500)}...`);
-                console.log(
-                  `   (结果太长，已截断。完整结果有 ${text.length} 字符)`
-                );
-              } else {
-                console.log(`   ${text}`);
-              }
+        for (const content of result.content as Array<{type: string; text?: string}>) {
+          if (content.type === "text" && content.text) {
+            const text = content.text;
+            // 截取前 500 字符，避免输出太长
+            if (text.length > 500) {
+              console.log(`   ${text.slice(0, 500)}...`);
+              console.log(
+                `   (结果太长，已截断。完整结果有 ${text.length} 字符)`
+              );
+            } else {
+              console.log(`   ${text}`);
             }
           }
         }
