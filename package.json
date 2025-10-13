@@ -1,0 +1,42 @@
+{
+  "name": "typescript-sse-mcp-client",
+  "version": "0.1.0",
+  "description": "TypeScript MCP 客户端示例 - 通过 SSE 连接远程 MCP 服务器",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/sse-client-example.js",
+    "demo": "node dist/openfda-demo.js",
+    "dev": "tsc && node dist/sse-client-example.js"
+  },
+  "keywords": [
+    "mcp",
+    "sse",
+    "model-context-protocol",
+    "typescript",
+    "openai",
+    "claude",
+    "ai"
+  ],
+  "author": "Feng Rongquan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BACH-AI-Tools/typescript-sse-mcp-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BACH-AI-Tools/typescript-sse-mcp-client/issues"
+  },
+  "homepage": "https://github.com/BACH-AI-Tools/typescript-sse-mcp-client#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
