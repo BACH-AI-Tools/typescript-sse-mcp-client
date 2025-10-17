@@ -7,8 +7,10 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/sse-client-example.js",
+    "streamable": "node dist/streamable-http-demo.js",
     "demo": "node dist/openfda-demo.js",
-    "dev": "tsc && node dist/sse-client-example.js"
+    "dev": "tsc && node dist/sse-client-example.js",
+    "dev:streamable": "tsc && node dist/streamable-http-demo.js"
   },
   "keywords": [
     "mcp",

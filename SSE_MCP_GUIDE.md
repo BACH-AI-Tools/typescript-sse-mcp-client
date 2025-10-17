@@ -446,3 +446,4 @@ npm run demo    # 运行 OpenFDA 查询示例
 - [MCP 官方文档](https://modelcontextprotocol.io/)
 - [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
 - [BACH AI Tools 组织](https://github.com/BACH-AI-Tools)
+

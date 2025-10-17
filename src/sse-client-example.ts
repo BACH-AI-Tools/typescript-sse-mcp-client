@@ -158,7 +158,10 @@ async function connectOpenFdaMcp(): Promise<void> {
 
         console.log("   ✅ 调用成功！");
         console.log("   结果:");
-        for (const content of result.content as Array<{type: string; text?: string}>) {
+        for (const content of result.content as Array<{
+          type: string;
+          text?: string;
+        }>) {
           if (content.type === "text" && content.text) {
             const text = content.text;
             // 截取前 500 字符，避免输出太长

@@ -55,50 +55,52 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      const content = (
+        result.content as Array<{ type: string; text?: string }>
+      )[0];
       if (content && content.type === "text" && content.text) {
-          const data = JSON.parse(content.text);
-          if (data.results && data.results.length > 0) {
-            const drug = data.results[0];
+        const data = JSON.parse(content.text);
+        if (data.results && data.results.length > 0) {
+          const drug = data.results[0];
 
-            console.log(`✅ 找到药品信息:`);
+          console.log(`✅ 找到药品信息:`);
 
-            // 品牌名
-            if (drug.openfda?.brand_name) {
-              console.log(
-                `   品牌名: ${drug.openfda.brand_name.slice(0, 3).join(", ")}`
-              );
-            }
-
-            // 通用名
-            if (drug.openfda?.generic_name) {
-              console.log(
-                `   通用名: ${drug.openfda.generic_name.slice(0, 3).join(", ")}`
-              );
-            }
-
-            // 制造商
-            if (drug.openfda?.manufacturer_name) {
-              console.log(
-                `   制造商: ${drug.openfda.manufacturer_name
-                  .slice(0, 2)
-                  .join(", ")}`
-              );
-            }
-
-            // 适应症（截取前200字）
-            if (drug.indications_and_usage) {
-              const indications = drug.indications_and_usage[0].slice(0, 200);
-              console.log(`   适应症: ${indications}...`);
-            }
-
-            console.log();
-          } else {
-            console.log("   ❌ 未找到相关信息\n");
+          // 品牌名
+          if (drug.openfda?.brand_name) {
+            console.log(
+              `   品牌名: ${drug.openfda.brand_name.slice(0, 3).join(", ")}`
+            );
           }
+
+          // 通用名
+          if (drug.openfda?.generic_name) {
+            console.log(
+              `   通用名: ${drug.openfda.generic_name.slice(0, 3).join(", ")}`
+            );
+          }
+
+          // 制造商
+          if (drug.openfda?.manufacturer_name) {
+            console.log(
+              `   制造商: ${drug.openfda.manufacturer_name
+                .slice(0, 2)
+                .join(", ")}`
+            );
+          }
+
+          // 适应症（截取前200字）
+          if (drug.indications_and_usage) {
+            const indications = drug.indications_and_usage[0].slice(0, 200);
+            console.log(`   适应症: ${indications}...`);
+          }
+
+          console.log();
         } else {
           console.log("   ❌ 未找到相关信息\n");
         }
+      } else {
+        console.log("   ❌ 未找到相关信息\n");
+      }
     } catch (error) {
       console.log(`   ❌ 查询失败: ${error}\n`);
     }
@@ -118,26 +120,28 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      const content = (
+        result.content as Array<{ type: string; text?: string }>
+      )[0];
       if (content && content.type === "text" && content.text) {
-          const data = JSON.parse(content.text);
-          if (data.results && data.results.length > 0) {
-            const drug = data.results[0];
+        const data = JSON.parse(content.text);
+        if (data.results && data.results.length > 0) {
+          const drug = data.results[0];
 
-            if (drug.adverse_reactions) {
-              const reactions = drug.adverse_reactions[0].slice(0, 300);
-              console.log(`✅ 不良反应信息:`);
-              console.log(`   ${reactions}...`);
-              console.log();
-            } else {
-              console.log("   ℹ️  未找到不良反应信息\n");
-            }
+          if (drug.adverse_reactions) {
+            const reactions = drug.adverse_reactions[0].slice(0, 300);
+            console.log(`✅ 不良反应信息:`);
+            console.log(`   ${reactions}...`);
+            console.log();
           } else {
-            console.log("   ❌ 未找到相关信息\n");
+            console.log("   ℹ️  未找到不良反应信息\n");
           }
         } else {
           console.log("   ❌ 未找到相关信息\n");
         }
+      } else {
+        console.log("   ❌ 未找到相关信息\n");
+      }
     } catch (error) {
       console.log(`   ❌ 查询失败: ${error}\n`);
     }
@@ -157,26 +161,28 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      const content = (
+        result.content as Array<{ type: string; text?: string }>
+      )[0];
       if (content && content.type === "text" && content.text) {
-          const data = JSON.parse(content.text);
-          if (data.results && data.results.length > 0) {
-            const drug = data.results[0];
+        const data = JSON.parse(content.text);
+        if (data.results && data.results.length > 0) {
+          const drug = data.results[0];
 
-            if (drug.warnings) {
-              const warnings = drug.warnings[0].slice(0, 300);
-              console.log(`✅ 警告信息:`);
-              console.log(`   ${warnings}...`);
-              console.log();
-            } else {
-              console.log("   ℹ️  未找到警告信息\n");
-            }
+          if (drug.warnings) {
+            const warnings = drug.warnings[0].slice(0, 300);
+            console.log(`✅ 警告信息:`);
+            console.log(`   ${warnings}...`);
+            console.log();
           } else {
-            console.log("   ❌ 未找到相关信息\n");
+            console.log("   ℹ️  未找到警告信息\n");
           }
         } else {
           console.log("   ❌ 未找到相关信息\n");
         }
+      } else {
+        console.log("   ❌ 未找到相关信息\n");
+      }
     } catch (error) {
       console.log(`   ❌ 查询失败: ${error}\n`);
     }
@@ -197,7 +203,9 @@ async function queryOpenFda(): Promise<void> {
         },
       });
 
-      const content = (result.content as Array<{type: string; text?: string}>)[0];
+      const content = (
+        result.content as Array<{ type: string; text?: string }>
+      )[0];
       if (content && content.type === "text" && content.text) {
         const response = content.text;
         // 截取前 400 字符
@@ -233,7 +241,9 @@ async function queryOpenFda(): Promise<void> {
           },
         });
 
-        const content = (result.content as Array<{type: string; text?: string}>)[0];
+        const content = (
+          result.content as Array<{ type: string; text?: string }>
+        )[0];
         if (content && content.type === "text" && content.text) {
           const data = JSON.parse(content.text);
           if (data.results && data.results.length > 0) {
