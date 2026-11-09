@@ -1,25 +1,25 @@
 {
   "name": "typescript-sse-mcp-client",
-  "version": "0.1.0",
-  "description": "TypeScript MCP 客户端示例 - 通过 SSE 连接远程 MCP 服务器",
-  "main": "dist/index.js",
+  "version": "1.0.0",
+  "description": "TypeScript MCP client examples for remote servers: Streamable HTTP and SSE (TypeScript 远程 MCP 客户端示例)",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/sse-client-example.js",
     "streamable": "node dist/streamable-http-demo.js",
-    "demo": "node dist/openfda-demo.js",
-    "dev": "tsc && node dist/sse-client-example.js",
-    "dev:streamable": "tsc && node dist/streamable-http-demo.js"
+    "sse": "node dist/sse-client-example.js",
+    "start": "node dist/streamable-http-demo.js",
+    "demo": "node dist/jieba-demo.js",
+    "smoke": "node scripts/smoke.mjs",
+    "dev": "tsc && node dist/streamable-http-demo.js"
   },
   "keywords": [
     "mcp",
     "sse",
+    "streamable-http",
     "model-context-protocol",
+    "mcp-client",
     "typescript",
-    "openai",
-    "claude",
-    "ai"
+    "jieba"
   ],
   "author": "Feng Rongquan",
   "license": "MIT",
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/BACH-AI-Tools/typescript-sse-mcp-client#readme",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.4"
+    "@modelcontextprotocol/sdk": "^1.24.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
